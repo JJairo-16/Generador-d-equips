@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Campionat</title>
-
+  <link rel="icon" type="image" href="./img/favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -14,7 +14,7 @@
   <div id="app" class="min-h-screen overflow-hidden">
     <div
       id="track"
-      class="flex w-[300vw] min-h-screen transition-transform duration-500 ease-in-out"
+      class="flex w-[400vw] min-h-screen transition-transform duration-500 ease-in-out"
       style="transform: translateX(0%)">
 
       <!-- PÀGINA 1 -->
@@ -69,7 +69,10 @@
                         id="teams-enum"
                         class="w-4 h-4 bg-black border-slate-600 text-blue-600 rounded focus:ring-blue-500">
                     </th>
-                    <th class="px-6 py-3 font-semibold">Nom de l’equip</th>
+                      <th class="px-8 py-3 font-semibold text-xl">
+                        Nom de l’equip
+                      </th>
+                    </th>
                   </tr>
                 </thead>
                 <tbody id="teams-rows" class="divide-y divide-slate-700">
@@ -80,7 +83,7 @@
 
           <div class="flex items-center justify-between mt-6">
             <button
-              id="backToStep1"
+              data-back-step="0"
               type="button"
               class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
               Enrere
@@ -112,7 +115,40 @@
 
             <div class="flex items-center justify-between pt-4">
               <button
-                id="backToStep2"
+                data-back-step="1"
+                type="button"
+                class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
+                Enrere
+              </button>
+
+             <button
+              id="toStep4"
+              type="button"
+              class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+              Següent
+            </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- PÀGINA 4 -->
+      <section class="w-screen min-h-screen flex items-center">
+        <div class="max-w-2xl mx-auto p-6 w-full">
+          <h2 class="text-3xl font-bold mb-2">Resum</h2>
+          <p class="text-slate-400 mb-6">Revisa les dades abans de finalitzar</p>
+
+          <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-6 space-y-4">
+            <div class="p-4 rounded-lg bg-slate-800 border border-slate-700">
+              <p class="text-sm text-slate-300">
+                Equips seleccionats:
+                <span id="teamsFinal" class="font-semibold text-slate-100">—</span>
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-4">
+              <button
+                data-back-step="2"
                 type="button"
                 class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
                 Enrere

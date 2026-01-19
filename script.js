@@ -2,15 +2,22 @@
 (() => {
   const app = document.getElementById("app");
   const track = document.getElementById("track");
+  const totalSteps = track.children.length;
+  track.style.width = `${totalSteps * 100}vw`;
 
   const teamsCount = document.getElementById("teamsCount");
 
   const toStep2 = document.getElementById("toStep2");
   const toStep3 = document.getElementById("toStep3");
+  const toStep4 = document.getElementById("toStep4");
 
-  const backToStep1 = document.getElementById("backToStep1");
-  const backToStep2 = document.getElementById("backToStep2");
-  
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-back-step]");
+    if (!btn) return;
+
+    go(Number(btn.dataset.backStep));
+  });
+
   const finish = document.getElementById("finish");
 
   const state = {
@@ -27,7 +34,8 @@
   }
 
   function go(step) {
-    state.step = Math.max(0, Math.min(step, 2));
+    const last = totalSteps - 1;
+    state.step = Math.max(0, Math.min(step, last));
     updateTrackPosition();
   }
 
@@ -60,10 +68,11 @@
     go(2);
   });
 
-  
-
-  backToStep1.addEventListener("click", () => go(0));
-  backToStep2.addEventListener("click", () => go(1));
+  toStep4.addEventListener("click", () => {
+    if (teamsCount.value < 2) return;
+    
+    go(3);
+  });
 
   finish.addEventListener("click", () => {
     alert(`Creat! (demo) Equips: ${state.teams}`);
@@ -104,7 +113,7 @@ function getRowText(id) {
   <td class="px-6 py-4">
     <input
       type="text"
-      class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+      class="w-full px-3 py-2 rounded-lg bg-black text-white border border-slate-600 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       placeholder="Equip ${id}"
     >
   </td>
@@ -115,22 +124,17 @@ function getRowText(id) {
 const teamRows = document.getElementById("teams-rows");
 const teamsEnumCheckbox = document.getElementById("teams-enum");
 
+function getEnum(index) {
+  return (teamsEnumCheckbox.checked) ? String.fromCodePoint(65 + index) : String(index + 1);
+}
+
 teamsEnumCheckbox.addEventListener("change", () => {
   const elements = teamRows.querySelectorAll("tr");
-  if (teamsEnumCheckbox.checked) {
-    elements.forEach((el) => {
-      const teamEnum = String.fromCodePoint(65 + Array.from(elements).indexOf(el));
+  elements.forEach((el, i) => {
+      const teamEnum = getEnum(i);
       el.querySelector("th").textContent = teamEnum;
       el.querySelector("input").placeholder = `Equip ${teamEnum}`;
     });
-
-  } else {
-    elements.forEach((el, i) => {
-      const teamEnum = String(i + 1);
-      el.querySelector("th").textContent = teamEnum;
-      el.querySelector("input").placeholder = `Equip ${teamEnum}`;
-    });
-  }
 });
 
 function updateTable() {
@@ -142,7 +146,8 @@ function updateTable() {
 
   if (dq > 0) {
     for (let i = 0; i < dq; i++) {
-      teamRows.innerHTML += getRowText(elements.length + i + 1);
+      const teamEnum = getEnum(elements.length + i );
+      teamRows.innerHTML += getRowText(teamEnum);
     }
     return;
   }
@@ -152,9 +157,5 @@ function updateTable() {
   }
 
 }
-
-// #endregion
-
-// #region Pantalla de noms d'quips
 
 // #endregion
