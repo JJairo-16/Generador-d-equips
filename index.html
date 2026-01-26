@@ -1,175 +1,127 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ca">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Campionat</title>
-  <link rel="icon" type="image" href="./img/favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-
 <body class="bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100">
-  <div id="app" class="min-h-screen overflow-hidden">
-    <div
-      id="track"
-      class="flex w-[400vw] min-h-screen transition-transform duration-500 ease-in-out"
-      style="transform: translateX(0%)">
+<div id="app" class="min-h-screen overflow-hidden">
+  <div id="track" class="flex w-[400vw] min-h-screen transition-transform duration-500 ease-in-out">
 
-      <!-- PÀGINA 1 -->
-      <section class="w-screen min-h-screen flex items-center">
-        <div class="max-w-2xl mx-auto p-6 w-full">
-          <h1 class="text-4xl font-bold mb-2">Generador de Campionat</h1>
-          <p class="text-slate-400 mb-6">Configura el nombre d’equips participants</p>
+    <!-- PÀGINA 1 -->
+    <section class="w-screen min-h-screen flex items-center">
+      <div class="max-w-2xl mx-auto p-6 w-full">
+        <h1 class="text-4xl font-bold mb-2">Generador de Campionat</h1>
+        <p class="text-slate-400 mb-6">Configura el nombre d’equips participants</p>
 
-          <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-6 space-y-4">
-            <label class="block text-sm font-semibold text-slate-300">
-              Nombre d’equips
-            </label>
+        <label class="block text-sm text-slate-300 mb-2">Nombre d’equips</label>
+        <select id="teamsCount" class="w-full px-4 py-3 rounded-lg text-sm bg-black text-white mb-6">
+          <option value="-1" disabled selected>Selecciona una opció</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="16">16</option>
+        </select>
 
-            <select
-              id="teamsCount"
-              class="block w-full px-4 py-3 rounded-lg text-sm
-                     bg-black text-white border border-slate-600
-                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-              <option value="-1" disabled selected>Selecciona una opció</option>
-              <option value="2">Dos equips</option>
-              <option value="4">Quatre equips</option>
-              <option value="6">Sis equips</option>
-              <option value="8">Vuit equips</option>
-            </select>
+        <button id="toStep2" class="px-6 py-2 bg-blue-600 text-white rounded">Continuar</button>
+      </div>
+    </section>
 
-            <div class="flex justify-end pt-4">
-              <button
-                id="toStep2"
-                type="button"
-                class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
-                Continuar
-              </button>
-            </div>
-          </div>
+    <!-- PÀGINA 2 -->
+    <section class="w-screen min-h-screen flex items-center">
+      <div class="max-w-2xl mx-auto p-6 w-full">
+        <h2 class="text-3xl font-bold mb-2">Equips</h2>
+        <p class="text-slate-400 mb-6">Introdueix els noms i escull el mode del campionat</p>
+
+        <div class="mb-6">
+          <table id="teams-rows" class="w-full text-left border-collapse"></table>
         </div>
-      </section>
 
-      <!-- PÀGINA 2 -->
-      <section class="w-screen min-h-screen flex items-center">
-        <div class="max-w-2xl mx-auto p-6 w-full">
-          <h2 class="text-3xl font-bold mb-2">Equips</h2>
-          <p class="text-slate-400 mb-6">Introdueix els noms dels equips participants</p>
-
-          <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-6 space-y-4">
-            <div class="relative overflow-x-auto rounded-lg border border-slate-700">
-              <table class="w-full text-sm text-left border-collapse">
-                <thead class="bg-slate-800 border-b border-slate-700">
-                  <tr>
-                    <th class="px-6 py-3 font-semibold">
-                      <input
-                        type="checkbox"
-                        id="teams-enum"
-                        class="w-4 h-4 bg-black border-slate-600 text-blue-600 rounded focus:ring-blue-500">
-                    </th>
-                      <th class="px-8 py-3 font-semibold text-xl">
-                        Nom de l’equip
-                      </th>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody id="teams-rows" class="divide-y divide-slate-700">
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between mt-6">
-            <button
-              data-back-step="0"
-              type="button"
-              class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
-              Enrere
-            </button>
-
-            <button
-              id="toStep3"
-              type="button"
-              class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
-              Següent
-            </button>
-          </div>
+        <div class="mb-6">
+          <label class="block text-sm text-slate-300 mb-2">Mode</label>
+          <select id="modeSelect" class="w-full px-4 py-3 rounded-lg text-sm bg-black text-white">
+            <option value="tournament" selected>Torneig (eliminatòries)</option>
+            <option value="league">Lliga (tots contra tots, anada i tornada)</option>
+          </select>
+          <p class="text-xs text-slate-400 mt-2">
+            <span class="font-semibold">Lliga:</span> calendari + simulació de jornades + classificació.<br>
+            <span class="font-semibold">Torneig:</span> simules cada ronda i el guanyador surt aleatòriament.
+          </p>
         </div>
-      </section>
 
-      <!-- PÀGINA 3 -->
-      <section class="w-screen min-h-screen flex items-center">
-        <div class="max-w-2xl mx-auto p-6 w-full">
-          <h2 class="text-3xl font-bold mb-2">Resum</h2>
-          <p class="text-slate-400 mb-6">Revisa les dades abans de finalitzar</p>
+        <div id="step2Error" class="hidden mb-4 text-sm text-red-300 bg-red-900/30 border border-red-700/50 rounded p-3"></div>
 
-          <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-6 space-y-4">
-            <div class="p-4 rounded-lg bg-slate-800 border border-slate-700">
-              <p class="text-sm text-slate-300">
-                Equips seleccionats:
-                <span id="teamsFinal" class="font-semibold text-slate-100">—</span>
-              </p>
-            </div>
+        <button data-back-step="0" class="px-6 py-2 mt-2 mr-2 bg-slate-600 rounded text-white">Enrere</button>
+        <button id="generateBtn" class="px-6 py-2 mt-2 bg-blue-600 rounded text-white">GENERAR</button>
+      </div>
+    </section>
 
-            <div class="flex items-center justify-between pt-4">
-              <button
-                data-back-step="1"
-                type="button"
-                class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
-                Enrere
-              </button>
+    <!-- PÀGINA 3 -->
+    <section class="w-screen min-h-screen flex items-center">
+      <div class="max-w-4xl mx-auto p-6 w-full">
+        <h2 id="page3Title" class="text-3xl font-bold mb-2">Enfrontaments</h2>
+        <p id="page3Subtitle" class="text-slate-400 mb-6"></p>
 
-             <button
-              id="toStep4"
-              type="button"
-              class="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
-              Següent
-            </button>
-            </div>
-          </div>
+        <!-- Controls TORNEIG -->
+        <div id="tournamentControls" class="hidden mb-4 flex flex-wrap gap-2 items-center">
+          <button id="playRoundBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded text-white font-semibold">
+            Simular ronda (guanyador aleatori)
+          </button>
+          <button id="nextPhaseBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            Següent fase
+          </button>
+          <div id="roundInfo" class="text-sm text-slate-300"></div>
         </div>
-      </section>
-    
-      <!-- PÀGINA 4 -->
-      <section class="w-screen min-h-screen flex items-center">
-        <div class="max-w-2xl mx-auto p-6 w-full">
-          <h2 class="text-3xl font-bold mb-2">Resum</h2>
-          <p class="text-slate-400 mb-6">Revisa les dades abans de finalitzar</p>
 
-          <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-6 space-y-4">
-            <div class="p-4 rounded-lg bg-slate-800 border border-slate-700">
-              <p class="text-sm text-slate-300">
-                Equips seleccionats:
-                <span id="teamsFinal" class="font-semibold text-slate-100">—</span>
-              </p>
-            </div>
-
-            <div class="flex items-center justify-between pt-4">
-              <button
-                data-back-step="2"
-                type="button"
-                class="px-6 py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
-                Enrere
-              </button>
-
-              <button
-                id="finish"
-                type="button"
-                class="px-6 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition">
-                Finalitzar
-              </button>
-            </div>
-          </div>
+        <!-- Controls LLIGA -->
+        <div id="leagueControls" class="hidden mb-4 flex flex-wrap gap-2 items-center">
+          <button id="simulateMatchdayBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded text-white font-semibold">
+            Simular jornada
+          </button>
+          <button id="nextMatchdayBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            Següent jornada
+          </button>
+          <button id="simulateAllLeagueBtn" class="px-4 py-2 bg-slate-600 hover:bg-slate-700 rounded text-white font-semibold">
+            Simular tota la lliga
+          </button>
+          <button id="finishLeagueBtn" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            Finalitzar lliga
+          </button>
+          <div id="leagueInfo" class="text-sm text-slate-300"></div>
         </div>
-      </section>
 
-    </div>
+        <!-- Zona LLIGA: classificació -->
+        <div id="standingsWrap" class="hidden mb-4"></div>
+
+        <!-- Contingut -->
+        <div id="content" class="space-y-4"></div>
+
+        <button data-back-step="1" class="px-6 py-2 mt-6 bg-slate-600 rounded text-white">Enrere</button>
+      </div>
+    </section>
+
+    <!-- PÀGINA 4 -->
+    <section class="w-screen min-h-screen flex items-center">
+      <div class="max-w-2xl mx-auto p-6 w-full">
+        <h2 class="text-3xl font-bold mb-2">Resultat final</h2>
+        <div id="winner" class="p-6 bg-green-900 text-white rounded-lg font-bold text-center"></div>
+
+        <div class="flex flex-wrap gap-2 mt-4">
+          <button data-back-step="2" class="px-6 py-2 bg-slate-600 rounded text-white">Enrere</button>
+          <button id="restartBtn" class="px-6 py-2 bg-red-600 hover:bg-red-700 rounded text-white font-semibold">
+            Reiniciar
+          </button>
+        </div>
+      </div>
+    </section>
+
   </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-  <script src="./script.js"></script>
+<script src="./script.js"></script>
 </body>
-
 </html>
